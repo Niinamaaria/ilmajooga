@@ -20,7 +20,9 @@ $templates = new League\Plates\Engine(TEMPLATE_DIR);
 // Selvitetään mitä sivua on kutsuttu ja suoritetaan sivua vastaava käsittelijä
 
 if ($request === '/' || $request === '/kurssit') {
-    echo $templates->render('kurssit');
+    require_once MODEL_DIR . 'kurssi.php';
+    $kurssit = haeKurssit();
+    echo $templates->render('kurssit',['kurssit' =>$kurssit]);
   } else if ($request === '/kurssi') {
     echo $templates->render('kurssi');
   }  else {
