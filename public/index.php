@@ -24,7 +24,13 @@ if ($request === '/' || $request === '/kurssit') {
     $kurssit = haeKurssit();
     echo $templates->render('kurssit',['kurssit' =>$kurssit]);
   } else if ($request === '/kurssi') {
-    echo $templates->render('kurssi');
+      require_once MODEL_DIR . 'kurssi.php';
+      $kurssi = haeKurssi($_GET['id']);
+      if ($kurssi){
+        echo $templates->render('kurssi',['kurssi' => $kurssi]);
+      } else {
+          echo $templates->render('kurssinotfound');
+      }
   }  else {
     echo $templates->render('notfound');
   }

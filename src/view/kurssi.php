@@ -1,3 +1,11 @@
-<?php $this->layout('template', ['title' => 'Kurssi']) ?>
+<?php $this->layout('template', ['title' => $kurssi['nimi']])?>
 
-<h1>Kurssi</h1>
+<?php
+    $start = new DateTime($kurssi['kur_alkaa']);
+    $end = new DateTime($kurssi['kur_loppuu']);
+?>
+
+<h1><?=$kurssi['nimi']?></h1>
+<div><?=$kurssi['kuvaus']?></div>
+<div>Alkaa: <?=$start->format('j.n.Y G:i')?></div>
+<div>Loppuu: <?=$end->format('j.n.Y G:i')?></div>
