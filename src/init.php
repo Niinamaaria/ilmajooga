@@ -4,4 +4,9 @@
 
 require_once '../config/config.php';
 
+// Otetaan autoload-skripti käyttöön. 
+// Tämä huolehtii, että kaikki sovelluksessa tarvittavat luokat tulevat ladattua ennen käyttöä.
+
+require_once '../vendor/autoload.php';
+
 ?>

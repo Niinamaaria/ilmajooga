@@ -4,9 +4,9 @@
 // TOdellisuudessa se on moniulotteinen taulukko, mutta riittää tietää että sen arvoja kutsutaan alkion nimillä
 // kuten esim: $config['urls]['baseUrl]
 
-$confiq = array(
+$config = array(
     "urls" => array(
-        "baseUrl" => "/~nkettunen/ilmajooga"
+        "baseUrl" => "/~nkettune/ilmajooga"
     )
 );
 

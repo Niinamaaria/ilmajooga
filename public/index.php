@@ -10,17 +10,21 @@ require_once '../src/init.php';
 // Nyt osoitteen alusta poistettava teksti on määritelty config-asetuksissa. 
 // Jatkossa sovellus on helpompi ottaa käyttöön toisessa sijainnissa. Riittää, että muutetaan config-asetukset oikeiksi
 
-$request = str_replace($config['urls']['baseUrl'],'', $_SERVER['REQUEST URI']);
+$request = str_replace($config['urls']['baseUrl'],'',$_SERVER['REQUEST_URI']);
 $request = strtok($request, '?');
+
+//Luodaan uusi Plates-olio ja kytketään se sovelluksen sivupohjiin
+
+$templates = new League\Plates\Engine('../src/view');
 
 // Selvitetään mitä sivua on kutsuttu ja suoritetaan sivua vastaava käsittelijä
 
-if ($request === '/' || $request === '/tapahtumat') {
-    echo '<h1>Kaikki tapahtumat</h1>';
-} else if ($request === '/tapahtuma') {
-    echo '<h1>Yksittäisen tapahtuman tiedot</h1>';
-} else {
-    echo'<h1>Pyydettyä sivua ei löytynyt :(</h1>';
-}
+if ($request === '/' || $request === '/kurssit') {
+    echo $templates->render('kurssit');
+  } else if ($request === '/kurssi') {
+    echo $templates->render('kurssi');
+  }  else {
+    echo $templates->render('notfound');
+  }
 
 ?>
