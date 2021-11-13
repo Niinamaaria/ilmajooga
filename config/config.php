@@ -5,10 +5,16 @@
 // kuten esim: $config['urls]['baseUrl]
 
 $config = array(
+    "db" => array(
+        "dbname" => $_SERVER["DB_DATABASE"],
+        "username" => $_SERVER["DB_USERNAME"],
+        "password" => $_SERVER["DB_PASSWORD"],
+        "host" => "localhost"
+    ),
     "urls" => array(
         "baseUrl" => "/~nkettune/ilmajooga"
     )
-);
+);   
 
 // Tässä määritellään joukko vakioita, joissa määritellään hakemistopolut sovelluksen eri palikoille
 // Sovelluksessa joudutaan viittaamaan useammassa skriptissä projektin eri hakemistoihin, 
