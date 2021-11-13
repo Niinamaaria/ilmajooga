@@ -1,10 +1,16 @@
 <?php
 
-// Siistitään polku urlin alusta ja mahdolliset parametrit urlin lopusta.
-// Siistimisen jälkeen osoite /~koodaaja/lanify/tapahtuma?id=1 on 
-// lyhentynyt muotoon /tapahtuma.
+// Suoritetaan projektin aloitusskripti
+// Tämä lataa kaikki tarvittavat määritykset, tällä hetkellä ainoastaan config.php-tiedoston 
+// mutta myöhemmin myös muuta tarpeellista 
 
-$request = str_replace('/~nkettunen/ilmajooga', '', $_SERVER['REQUEST URI']);
+require_once '../src/init.php';
+
+// Siistitään polku urlin alusta ja mahdolliset parametrit urlin lopusta.
+// Nyt osoitteen alusta poistettava teksti on määritelty config-asetuksissa. 
+// Jatkossa sovellus on helpompi ottaa käyttöön toisessa sijainnissa. Riittää, että muutetaan config-asetukset oikeiksi
+
+$request = str_replace($config['urls']['baseUrl'],'', $_SERVER['REQUEST URI']);
 $request = strtok($request, '?');
 
 // Selvitetään mitä sivua on kutsuttu ja suoritetaan sivua vastaava käsittelijä
