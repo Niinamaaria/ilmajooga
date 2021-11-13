@@ -17,6 +17,13 @@
         echo "<div>";
             echo "<div>$kurssi[nimi]</div>";
             echo "<div>" . $start->format('j.n.Y') . "-" . $end->format('j.n.Y') . "</div>";
+
+            // Lisätään linkitys omana div-elementtinään kurssin nimen ja päivämäärien jatkoksi
+            // Linkin id-tunnuksen arvoksi tulee kurssitiedon id eli idkurssi-kentän arvo
+            // joka on kurssi-tietokantataulun yksilöivä pääavain
+            // Linkki on suhteellinen linkki samassa kansiossa olevaan toiseen sivuun 
+
+            echo "<div><a href='kurssi?id=" . $kurssi['idkurssi'] . "'>TIEDOT</a></div>";
         echo "</div>";
     }
 

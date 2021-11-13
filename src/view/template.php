@@ -6,7 +6,7 @@
     </head>
 <body>
         <header>
-            <h1>Ilmajoogatapahtuma Ilmalento</h1>
+            <h1><a href="<?=BASEURL?>">Ilmajoogatapahtuma Ilmalento</a></h1>
     </header>
     <section>
         <?=$this->section('content')?>

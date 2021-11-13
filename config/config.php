@@ -28,5 +28,9 @@ define("TEMPLATE_DIR", PROJECT_ROOT . "src/view/");
 define("MODEL_DIR", PROJECT_ROOT . "src/model/");
 define("CONTROLLER_DIR", PROJECT_ROOT . "src/controller/");
 
+// Koska $config-muuttuja ei näy Plates-sivupohjassa, määritellään siitä vakio voidaksemme lisätä linkityksen
+define("BASEURL", $config['urls']['baseUrl']);
+
+
 
 ?>
