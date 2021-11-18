@@ -18,24 +18,28 @@ $request = strtok($request, '?');
 $templates = new League\Plates\Engine(TEMPLATE_DIR);
 
 // Selvitetään mitä sivua on kutsuttu ja suoritetaan sivua vastaava käsittelijä
+// Käytetään switch-lausetta, koska tämä on selkeämpi kun muuttujan arvon perusteella suoritetaan eri kokonaisuuksia.
 
-if ($request === '/' || $request === '/kurssit') {
+switch ($request) {
+  case '/':
+  case '/kurssit':
     require_once MODEL_DIR . 'kurssi.php';
     $kurssit = haeKurssit();
-    echo $templates->render('kurssit',['kurssit' =>$kurssit]);
-  } else if ($request === '/kurssi') {
-      require_once MODEL_DIR . 'kurssi.php';
-      $kurssi = haeKurssi($_GET['id']);
-      if ($kurssi){
-        echo $templates->render('kurssi',['kurssi' => $kurssi]);
-      } else {
-          echo $templates->render('kurssinotfound');
-      } 
-    } else if ($request ===  '/lisaa_tili') {
-        echo $templates->render('lisaa_tili');
+    echo $templates->render('kurssit', ['kurssit' => $kurssit]);
+    break;
+  case '/kurssi':
+    require_once MODEL_DIR . 'kurssi.php';
+    $kurssi = haeKurssi($_GET['id']);
+    if ($kurssi) {
+      echo $templates->render('kurssi', ['kurssi' => $kurssi]);
+    } else {
+      echo $templates->render('kurssinotfound');
     }
-    else {
+    break;
+  case '/lisaa_tili':
+    echo $templates->render('lisaa_tili');
+    break;
+    default:
     echo $templates->render('notfound');
-  }
-
+}
 ?>
