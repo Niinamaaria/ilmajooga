@@ -30,8 +30,11 @@ if ($request === '/' || $request === '/kurssit') {
         echo $templates->render('kurssi',['kurssi' => $kurssi]);
       } else {
           echo $templates->render('kurssinotfound');
-      }
-  }  else {
+      } 
+    } else if ($request ===  '/lisaa_tili') {
+        echo $templates->render('lisaa_tili');
+    }
+    else {
     echo $templates->render('notfound');
   }
 
