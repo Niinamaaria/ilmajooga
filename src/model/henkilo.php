@@ -11,6 +11,20 @@
     return DB::lastInsertId();
   }
 
+  // esitellään haeHenkiloSahkopostilla- funktio, joka hakee tietokannasta kaikki ne henkilöt, joilla on 
+  // parametrina annettu sähköposti ja palauttaa niista taulukon
+
+  function haeHenkiloSahkopostilla($email) {
+      return DB::run('SELECT * FROM henkilot WHERE email = ?;', [$email])->fetchAll();
+  }
+
+   // esitellään haeHenkiloPuhelinnumerolla- funktio, joka hakee tietokannasta kaikki ne henkilöt, joilla on 
+  // parametrina annettu puhelinnumero ja palauttaa niista taulukon
+
+  function haeHenkiloPuhelinnumerolla($puhnro) {
+    return DB::run('SELECT * FROM henkilot WHERE puhnro = ?;', [$puhnro])->fetchAll();
+  }
+
 ?>
 
 
