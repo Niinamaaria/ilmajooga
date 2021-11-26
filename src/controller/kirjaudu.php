@@ -26,4 +26,28 @@
 
   }
 
+  function logout() {
+
+    // Esitellään uloskirjautumiseen käytettävä funktio logout. 
+    // Tyhjennetään ensin mahdolliset istuntomuuttujat sekä eväste, johon istuntotieto on tallennettu.
+    // Lopuksi poistetaan kaikki istuntoon liittyvä tieto tuhoamalla istunto.
+
+    // Tyhjennetään istuntomuuttujat.
+    $_SESSION = array();
+
+    // Poistetaan istunnon eväste.
+    if (ini_get("session.use_cookies")) {
+      $params = session_get_cookie_params();
+      setcookie(session_name(), '', time() - 42000,
+        $params["path"], $params["domain"],
+        $params["secure"], $params["httponly"]
+      );
+    }
+
+    // Tuhotaan vielä lopuksi istunto.
+    session_destroy();
+
+  }
+
+
 ?>
