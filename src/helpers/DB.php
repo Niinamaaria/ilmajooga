@@ -5,17 +5,18 @@
 // Luokkakoodi on kopioitu osoitteesta https://phpdelusions.net/wrapper
 
 // Viedään config-tiedoissa määritellyt tietokantaasetukset vakioiksi.
-
 define('DB_HOST', $config['db']['host']);
 define('DB_NAME', $config['db']['dbname']);
 define('DB_USER', $config['db']['username']);
 define('DB_PASS', $config['db']['password']);
 define('DB_CHAR', 'utf8');
 
-// Määritellään luokka, joka tekeetietokantayhteydesä ja suoritettavista toiminnoista staattisia
+
+// Määritellään luokka, joka tekee tietokantayhteydestä ja suoritettavista toiminnoista staattisia
 // jolloin kyselyt suoritetaan yhden ja saman tietokantayhteyden kautta. Toimii, kun sovellukseen haetaan tietoa
 // vain yhdestä tietokannasta.
 // Luokka mahdollistaa jatkossa tietokantakyselyiden tiiviin esitystavan ilman tietokantayhteyden avaamista.
+
 
 class DB
 {
@@ -50,4 +51,4 @@ class DB
         $stmt->execute($args);
         return $stmt;
     }
-}   
+}            

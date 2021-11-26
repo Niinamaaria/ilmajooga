@@ -15,7 +15,8 @@ function haeKurssit() {
 // Tämä olisi kuotenkin hyvä tehdä ja nostaa tarvittaesa virhe, mikäli annettu arvo ei täytä vaadittuja ehtoja
 
 function haeKurssi($id) {
+   // if(is_int($id)) {
     return DB::run('SELECT * FROM kurssi WHERE idkurssi = ?;', [$id])->fetch();
-}
-
+   // }
+} 
 ?>

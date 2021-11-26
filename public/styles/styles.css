@@ -24,6 +24,9 @@ body {
 header {
     background-color: #C3B1E1;
     padding: 1rem 1.5rem;
+    border-radius: 50px;
+    margin-left: 1rem;
+    margin-right: 1rem;
 }
 
 header h1 {
@@ -97,7 +100,7 @@ input {
     border: 1px solid #999;
     border-radius: 0.3rem;
     padding: 0.45rem;
-    font-size: 0.5rem;
+    font-size: 0.9rem;
     width: 17rem;
 }
 
