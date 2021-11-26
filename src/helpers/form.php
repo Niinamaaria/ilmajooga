@@ -17,4 +17,21 @@ function cleanArrayData($array=[]) {
   return $result;
 }
 
+// getValue-funktio palauttaa arvon taulukosta, jos se on määritelty, muuten palautetaan
+// ns. tyhjä arvo(null). 
+// Taulukosta löytyvästä arvosta muutetaan tietyt merkit erikoismerkeiksi,
+// jotta kentän arvo on turvallista tulostaa sivulle. 
+// Tämä estää käyttäjän lomakkeelle syöttämien HTML- ja JavaScript-koodien suorittamisen
+
+function getValue($values, $key) {
+    if (array_key_exists($key, $values)) {
+      return htmlspecialchars($values[$key]);
+    } else {
+      return null;
+    }
+  }
+  
+
 ?>
+
+

@@ -113,3 +113,9 @@ input[type=submit] {
     font-weight: bolder;
     margin: 1rem auto;
 } 
+
+.error {
+    color: #FF0000;
+    font-size: 0.9rem;
+    font-weight: bold;
+}
