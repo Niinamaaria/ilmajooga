@@ -10,6 +10,17 @@ session_start();
 
 require_once '../src/init.php';
 
+  // Haetaan kirjautuneen käyttäjän tiedot.
+  // Tarkistetaan, onko käyttäjä kirjautunut sisälle seli onko käyttäjätunnuksen sisältävä istuntomuuttuja määritelty.
+  // Jos on, niin haetaan tiedot ja tallennetaan ne loggeduser- muuttujaan. 
+  // Muussa tapauksessa loggeduser-muuttujan arvoksi määritellään tyhjä (NULL)
+  if (isset($_SESSION['user'])) {
+    require_once MODEL_DIR . 'henkilo.php';
+    $loggeduser = haeHenkilo($_SESSION['user']);
+  } else {
+    $loggeduser = NULL;
+  }
+
 // Siistitään polku urlin alusta ja mahdolliset parametrit urlin lopusta.
 // Nyt osoitteen alusta poistettava teksti on määritelty config-asetuksissa. 
 // Jatkossa sovellus on helpompi ottaa käyttöön toisessa sijainnissa. Riittää, että muutetaan config-asetukset oikeiksi

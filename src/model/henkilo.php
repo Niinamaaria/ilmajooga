@@ -11,6 +11,15 @@
     return DB::lastInsertId();
   }
 
+
+  // Esitellään haeHenkilo- funktio, joka hakee tietokannasta henkilöt, joilla on parametrina annettu sähköposti
+  // ja palauttaa niistä kaikkien rivien sijaan ensimmäisen rivin. 
+  // Tämä riittää, koska tietokannassa ei saa olla kahta tai usemapaa käyttäjää, joilla on sama shäköpostiosoite
+
+  function haeHenkilo($email) {
+      return DB::run('SELECT * FROM henkilot WHERE email = ?;', [$email])->fetch();
+  }
+
   // esitellään haeHenkiloSahkopostilla- funktio, joka hakee tietokannasta kaikki ne henkilöt, joilla on 
   // parametrina annettu sähköposti ja palauttaa niista taulukon
 
