@@ -33,7 +33,7 @@ function lisaaTili($formdata) {
     if (!preg_match("/^[0-9]{1,}/",$formdata['puhnro'])) {
       $error['puhnro'] = "Puhelinnumerosi muoto on virheellinen.";
     } else {
-        if (haehenkiloPuhelinnumerolla($formdata['puhnro'])) {
+        if (haeHenkiloPuhelinnumerolla($formdata['puhnro'])) {
             $error['puhnro'] = "Puhelinnumero on jo käytössä.";
         }
     }
