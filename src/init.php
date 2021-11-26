@@ -9,4 +9,11 @@ require_once '../config/config.php';
 
 require_once '../vendor/autoload.php';
 
+// Liitetään lisaa_tili- sivulle syötettyjen tietojen tarkastamiseen käytettävä apufunktio osaksi ohjelmaa 
+
+require_once HELPERS_DIR . 'form.php';
+
+
+require_once HELPERS_DIR . 'DB.php';
+
 ?>
