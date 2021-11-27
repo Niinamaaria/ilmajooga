@@ -88,7 +88,31 @@ switch ($request) {
             echo $templates->render('kirjaudu', [ 'error' => []]);
           }
           break; 
-          case "/logout":
+          case '/ilmoittaudu':
+            if ($_GET['id']) {
+              require_once MODEL_DIR . 'ilmoittautuminen.php';
+              $idkurssi = $_GET['id'];
+              if ($loggeduser) {
+                lisaaIlmoittautuminen($loggeduser['idhenkilo'],$idkurssi);
+              }
+              header("Location: kurssi?id=$idkurssi");
+            } else {
+              header("Location: kurssit");
+            }
+            break;    
+    case '/peru':
+      if ($_GET['id']) {
+        require_once MODEL_DIR . 'ilmoittautuminen.php';
+        $idkurssi = $_GET['id'];
+        if ($loggeduser) {
+          poistaIlmoittautuminen($loggeduser['idhenkilo'],$idkurssi);
+        }
+        header("Location: kurssi?id=$idkurssi");
+      } else {
+        header("Location: kurssit");  
+      }
+      break;
+      case "/logout":
             require_once CONTROLLER_DIR . 'kirjaudu.php';
             logout();
             header("Location: " . $config['urls']['baseUrl']);
