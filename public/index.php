@@ -42,15 +42,23 @@ switch ($request) {
     $kurssit = haeKurssit();
     echo $templates->render('kurssit', ['kurssit' => $kurssit]);
     break;
-  case '/kurssi':
-    require_once MODEL_DIR . 'kurssi.php';
-    $kurssi = haeKurssi($_GET['id']);
-    if ($kurssi) {
-      echo $templates->render('kurssi', ['kurssi' => $kurssi]);
-    } else {
-      echo $templates->render('kurssinotfound');
-    }
-    break; 
+    case '/kurssi':
+      require_once MODEL_DIR . 'kurssi.php';
+      require_once MODEL_DIR . 'ilmoittautuminen.php';
+      $kurssi = haeKurssi($_GET['id']);
+      if ($kurssi) {
+        if ($loggeduser) {
+          $ilmoittautuminen = haeIlmoittautuminen($loggeduser['idhenkilo'],$kurssi['idkurssi']);
+        } else {
+          $ilmoittautuminen = NULL;
+        }
+        echo $templates->render('kurssi',['kurssi' => $kurssi,
+                                             'ilmoittautuminen' => $ilmoittautuminen,
+                                             'loggeduser' => $loggeduser]);
+      } else {
+        echo $templates->render('kurssinotfound');
+      }
+      break;
     case '/lisaa_tili':
       if (isset($_POST['laheta'])) {
         $formdata = cleanArrayData($_POST);
