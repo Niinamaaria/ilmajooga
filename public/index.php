@@ -112,6 +112,19 @@ switch ($request) {
         header("Location: kurssit");  
       }
       break;
+      case "/vahvista":
+        if (isset($_GET['key'])) {
+          $key = $_GET['key'];
+          require_once MODEL_DIR . 'henkilo.php';
+          if (vahvistaTili($key)) {
+            echo $templates->render('tili_aktivoitu');
+          } else {
+            echo $templates->render('tili_aktivointi_virhe');
+          }
+        } else {
+          header("Location: " . $config['urls']['baseUrl']);
+        }
+        break;
       case "/logout":
             require_once CONTROLLER_DIR . 'kirjaudu.php';
             logout();
