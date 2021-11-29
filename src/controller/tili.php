@@ -1,6 +1,11 @@
 <?php
 
-function lisaaTili($formdata) {
+function lisaaTili($formdata, $baseurl='') {
+
+  // $baseurl on parametri, jossa välitetään sivuston osoitteen perusosa.
+  // Tämä tieto on config-asetuksissa, mutta se ei välitys suoraan tälle funktiolle,
+  // koska se on tallennettu tavalliseen muuttujaan.
+  // Oletusarvona sille annetaan tyhjä merkkijono, jolloin sivusto on lähtökohtaisesti palvelimen juuressa.
 
   // Tuodaan henkilo-mallin funktiot, joilla voidaan lisätä
   // henkilön tiedot tietokantaan.
@@ -53,7 +58,6 @@ function lisaaTili($formdata) {
     }
   }
 
-
   // Tarkistetaan, että kummatkin salasanat on annettu ja että
   // ne ovat keskenään samat.
   if (isset($formdata['salasana1']) && $formdata['salasana1'] &&
@@ -94,10 +98,43 @@ function lisaaTili($formdata) {
     //  error    = Taulukko, jossa on lomaketarkistuksessa
     //             esille tulleet virheet.
 
+
     // Tarkistetaan onnistuiko henkilön tietojen lisääminen.
     // Jos idhenkilo-muuttujassa on positiivinen arvo,
     // onnistui rivin lisääminen. Muuten liäämisessä ilmeni
     // ongelma.
+
+    if($idhenkilo) {
+
+      // Luodaan käyttäjälle aktivointiavain ja muodostetaan
+      // aktivointilinkki.
+
+      require_once(HELPERS_DIR . "secret.php");
+      $avain = generateActivationCode($email);
+      $url = 'https://' . $_SERVER['HTTP_HOST'] . $baseurl . "/vahvista?key=$avain";
+
+      // Päivitetään aktivointiavain tietokantaan ja lähetetään
+      // käyttäjälle sähköpostia. Jos tämä onnistui, niin palautetaan
+      // palautusarvona tieto tilin onnistuneesta luomisesta. Muuten
+      // palautetaan virhekoodi, joka ilmoittaa, että jokin
+      // lisäyksessä epäonnistui.
+
+      if(paivitaVahvavain($email,$avain) && lahetaVahvavain($email,$url)) {
+        return [
+          "status"  => 200,
+          "id"      => $idhenkilo,
+          "data"    => $formdata
+        ];
+      } else {
+        return [
+          "status"  => 500,
+          "data"    => $formdata
+        ];
+      }
+    }
+
+    /*
+
     if ($idhenkilo) {
       return [
         "status" => 200,
@@ -111,7 +148,11 @@ function lisaaTili($formdata) {
       ];
     }
 
+
+       */
+
   } else {
+
 
     // Lomaketietojen tarkistuksessa ilmeni virheitä.
     return [
@@ -120,7 +161,28 @@ function lisaaTili($formdata) {
       "error"  => $error
     ];
 
-  }
+  } 
 }
+
+// Vahvistussähköpostin lähetyksen hoitava funktio.
+// Tämä funktio lähettää esimääritellyn tekstin annettuun sähköpostiosoitteeseen.
+// Funktio sisällyttää tekstin keskelle annetun url-osoitteen, joka on käyttäjälle muodostettu aktivointilinkki.
+// Funktio palauttaa totuusarvon tosi, jos sähköposti hyväksyttiin lähettäväksi.
+
+function lahetaVahvavain($email,$url) {
+  $message = "Hei!\n\n" . 
+             "Olet rekisteröitynyt Joogastudio Nisayan-palveluun tällä\n" . 
+             "sähköpostiosoitteella. Klikkaamalla alla olevaa\n" . 
+             "linkkiä, vahvistat käyttämäsi sähköpostiosoitteen\n" .
+             "ja pääset käyttämään Nisayan palvelua.\n\n" . 
+             "$url\n\n" .
+             "Jos et ole rekisteröitynyt Joogastudio Nisayan palveluun, niin\n" . 
+             "silloin tämä sähköposti on tullut sinulle\n" .
+             "vahingossa. Siinä tapauksessa ole hyvä ja\n" .
+             "poista tämä viesti.\n\n".
+             "Terveisin, Joogastudio Nisaya";
+  return mail($email,'Joogastudio Nisayan-tilin aktivointilinkki',$message);
+}
+
 
 ?>

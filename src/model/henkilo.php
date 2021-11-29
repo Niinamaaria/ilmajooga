@@ -34,6 +34,24 @@
     return DB::run('SELECT * FROM henkilot WHERE puhnro = ?;', [$puhnro])->fetchAll();
   }
 
+  // paivitaVahvavain-funktio päivittää vahvistusavaimen tietokantaan käyttäjän sähköpostiosoitteen perusteella.
+  // Tätä käytetään generoidun vahvistusavaimen tallentamiseen silloin kun tiliä luodaan
+  // tai käyttäjä pyytää uutta vahvistusavainta.
+
+
+  function paivitaVahvavain($email,$avain) {
+    return DB::run('UPDATE henkilot SET vahvavain = ? WHERE email = ?', [$avain,$email])->rowCount();
+  }
+
+  // vahvistaTili-funktio vahvistaa käyttäjän tilin määrittelemällä vahvistettu-arvon todeksi.
+  // Muutosrivi etsitään vahvistusavaimella, koska vahvistuslinkissä ei saa tietoturvasyistä
+  // ilmetä käyttäjän sähköpostiosoite.
+
+  function vahvistaTili($avain) {
+    return DB::run('UPDATE henkilot SET vahvistettu = TRUE WHERE vahvavain = ?', [$avain])->rowCount();
+  }
+
+
 ?>
 
 
