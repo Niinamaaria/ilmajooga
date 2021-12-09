@@ -1,7 +1,8 @@
+<?php $this->layout('template_admin', ['title' => 'Tulevat kurssit']) ?>
 
-<?php $this->layout('template', ['title' => 'Tulevat kurssit']) ?>
+<h1>Tervetuloa pääkäyttäjäsivulle</h1>
 
-<h1>Tulevat kurssit</h1>
+<h2>Tulevat kurssit</h2>
 
 <div class='kurssit'>
     <?php
@@ -28,7 +29,4 @@
     }
 
     ?>
-
-
-
     </div>

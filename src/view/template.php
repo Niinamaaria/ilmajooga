@@ -20,9 +20,12 @@
       </div>
     </header>
 
+    <div class="paakayt">Nisayan pääkäyttäjäsivulle <a href="https://neutroni.hayo.fi/~nkettune/ilmajooga/admin/kurssit"> tästä</a></div>
+
     <section>
         <?=$this->section('content')?>
     </section>
+
     <footer>
         <hr>
         <div>Ilmajoogatapahtuma Ilma by Joogastudio Nisaya</div>

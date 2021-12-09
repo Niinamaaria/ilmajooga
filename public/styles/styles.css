@@ -68,6 +68,16 @@ footer img {
     padding-right: 1.7em;
 } 
 
+footer img[class="admin"] {
+
+    width: 25em;
+    height: 18em;
+    border-radius: 50%;
+    padding: 0.4em;
+    padding-left: 1.7em;
+    padding-right: 1.7em;
+}
+
 footer p {
     margin-top: 0.5rem;
 }
@@ -152,3 +162,21 @@ input[type=submit], .button {
     padding: 0.5rem;
     text-decoration: none;
 }
+
+.paakayt {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.adminbutton {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 15px;
+}
+
+
+

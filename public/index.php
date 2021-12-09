@@ -32,6 +32,11 @@ $request = strtok($request, '?');
 
 $templates = new League\Plates\Engine(TEMPLATE_DIR);
 
+//Luodaan uusi Plates-olio admin-käyttäjille ja kytketään se sovelluksen sivupohjiin
+
+$admintemplate = new League\Plates\Engine(ADMINTEMPLATE_DIR);
+
+
 // Selvitetään mitä sivua on kutsuttu ja suoritetaan sivua vastaava käsittelijä
 // Käytetään switch-lausetta, koska tämä on selkeämpi kun muuttujan arvon perusteella suoritetaan eri kokonaisuuksia.
 
@@ -46,14 +51,35 @@ switch ($request) {
       require_once MODEL_DIR . 'kurssi.php';
       require_once MODEL_DIR . 'ilmoittautuminen.php';
       $kurssi = haeKurssi($_GET['id']);
+
+      // Tässä kohtaa uutta alemmilla riveillä
+      $ilmoittautuneita = laskeIlmoittautumiset($_GET['id']);
+
+
+
       if ($kurssi) {
         if ($loggeduser) {
           $ilmoittautuminen = haeIlmoittautuminen($loggeduser['idhenkilo'],$kurssi['idkurssi']);
         } else {
           $ilmoittautuminen = NULL;
         }
+
+        // Tässä kohtaa uutta alemmilla riveillä
+        $naytailmoittautuminen = false;
+        $kurssitaynna = false;
+        if(!$ilmoittautuminen && $ilmoittautuneita['kpl'] < $kurssi['osallistujia'] || !$kurssi['osallistujia'] ) {
+          $naytailmoittautuminen = true;
+        }
+        if ($ilmoittautuneita['kpl'] >= $kurssi['osallistujia']) {
+          $kurssitaynna = true;
+        }
+
         echo $templates->render('kurssi',['kurssi' => $kurssi,
                                              'ilmoittautuminen' => $ilmoittautuminen,
+                                             // TÄSSÄ alhaalla lisättyä
+                                             'naytailmoittautuminen' => $naytailmoittautuminen,
+                                             'kurssitaynna' => $kurssitaynna,
+                                             'ilmoittautuneita' => $ilmoittautuneita['kpl'],
                                              'loggeduser' => $loggeduser]);
       } else {
         echo $templates->render('kurssinotfound');
@@ -135,7 +161,52 @@ switch ($request) {
             require_once CONTROLLER_DIR . 'kirjaudu.php';
             logout();
             header("Location: " . $config['urls']['baseUrl']);
-            break;   
+            break; 
+      
+
+      case "/admin/kurssit":
+        if($loggeduser["admin"]) {
+        require_once MODEL_DIR . 'admin_kurssi.php';
+
+        $kurssitAdmin = haeKurssitAdmin(); 
+        echo $admintemplate->render('kurssit_admin', ['kurssit' => $kurssitAdmin]);
+        } else {
+          echo $admintemplate->render('admin_notvalid');
+        }
+        break;
+        case '/admin/kurssi':
+          require_once MODEL_DIR . 'admin_kurssi.php';
+          $kurssi = haeKurssiAdmin($_GET['id']);
+          if ($kurssi) {
+            echo $admintemplate->render('admin_kurssi',['kurssi' => $kurssi]);
+          } else {
+            echo $admintemplate->render('kurssinotfound');
+          }
+          break;
+        case "/admin/poista":
+          require_once MODEL_DIR . 'kurssinpoisto_admin.php';
+          $idkurssi = $_GET['id'];
+          if($loggeduser["admin"]) {
+            poistaKurssi($idkurssi);
+          }header("Location: https://neutroni.hayo.fi/~nkettune/ilmajooga/admin/kurssit");
+
+        // TÄHÄN YKSITTÄISEN KURSSIN POISTAMISEN TIEDOT 
+        // TÄMÄ EI VIELÄ TOIMI
+          
+        /*if ($_GET['id'])
+        require_once MODEL_DIR . 'kurssinpoisto_admin.php';
+        $idkurssi = $_GET['id'];
+        if($loggeduser["admin"]) {
+          poistaKurssi($loggeduser['idhenkilo'],$idkurssi);
+        } header("Location: kurssi?id=$idkurssi");
+
+         if($kurssi) {
+           if($loggeduser["admin"]) {
+             $kurssinpoisto = poistaKurssi($loggeduser['idhenkilo'],$kurssi['idkurssi']);
+           }
+         } */
+
+            
     default:
     echo $templates->render('notfound');
 }

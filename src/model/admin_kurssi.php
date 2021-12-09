@@ -5,7 +5,7 @@ require_once HELPERS_DIR . 'DB.php';
 // Esitellään haeKurssit-funktio, joka hakee tietokannasta kaikki kurssit kurssin aloitusajan mukaan järjestettynä.
 // Funktio palauttaa kurssit taulukkona
 
-function haeKurssit() {
+function haeKurssitAdmin() {
     return DB::run('SELECT * FROM kurssi ORDER BY kur_alkaa;')->fetchAll();
 }
 
@@ -14,18 +14,11 @@ function haeKurssit() {
 // eli kokonaisluku.
 // Tämä olisi kuotenkin hyvä tehdä ja nostaa tarvittaesa virhe, mikäli annettu arvo ei täytä vaadittuja ehtoja
 
-function haeKurssi($id) {
+function haeKurssiAdmin($id) {
    // if(is_int($id)) {
     return DB::run('SELECT * FROM kurssi WHERE idkurssi = ?;', [$id])->fetch();
    // }
 } 
-
-// Funktio, jonka avulla lasketaan kullekin kursille ilmoittatuneiden määrä
-
-function laskeIlmoittautumiset($id) {
-    return DB::run('SELECT COUNT(*) AS kpl FROM ilmoittautumiset WHERE idkurssi = ?;',[$id])->fetch();
-}
-
 
 
 ?>
