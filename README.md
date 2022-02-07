@@ -26,7 +26,7 @@ In the application, user can browse events without logging in, as well as see th
 
 Upon registration, the application sends the user a confirmation link via email, through which the user is verified, and only then can the user log in to the application.
 
-# hosting site
+# admin site
 
 An admin / maintenance website has also been implemented for the application.
 
